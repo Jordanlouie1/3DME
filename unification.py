@@ -120,15 +120,15 @@ def combine_left_right_views(left_file, right_file,
         
         # Calculate offset to bring them together
         # Move both to origin, then offset slightly
-        offset_distance = 0.05  # Small offset to keep them slightly apart
+        offset_distance = -0.1  # Small offset to keep them slightly apart
         
         # Move left to origin minus offset
         left_pcd.translate(-left_center)
-        left_pcd.translate([-offset_distance/2, 0, 0])
+        left_pcd.translate([-offset_distance/2, 0, 0.12])
         
         # Move right to origin plus offset
         right_pcd.translate(-right_center)
-        right_pcd.translate([offset_distance/2, 0, 0])
+        right_pcd.translate([offset_distance/2, 0, -0.12])
         
         # Visualize after alignment
         if visualize:
@@ -220,8 +220,8 @@ def interactive_rotation(left_file, right_file):
 
 # Example usage
 if __name__ == "__main__":
-    left_file = "MogeProcessed/left1.ply"
-    right_file = "MogeProcessed/right1.ply"
+    left_file = "/Users/jordan/Documents/3DME/3DME/MogeProcessed/left1.ply"
+    right_file = "/Users/jordan/Documents/3DME/3DME/MogeProcessed/right1.ply"
     
     # METHOD 1: Simple - assume right view needs 180° rotation
     print("="*60)
