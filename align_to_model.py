@@ -75,6 +75,11 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Manual translation overrides per scan, e.g. left1=-0.05,0,0 right1=0.05,0,0",
     )
+    parser.add_argument(
+        "--manual-only",
+        action="store_true",
+        help="Skip registration entirely; only apply manual/metadata rotations and translations",
+    )
     return parser.parse_args()
 
 
@@ -312,22 +317,27 @@ def align_scans(args: argparse.Namespace) -> None:
         if manual_vector is not None:
             print(f"  Applying manual translation {manual_vector}")
             scan.translate(manual_vector)
-        scan_down, scan_fpfh = preprocess_point_cloud(scan, args.voxel_size)
-        init = global_registration(
-            scan_down,
-            model_down,
-            scan_fpfh,
-            model_fpfh,
-            args.global_distance,
-        )
-        refine = refine_with_icp(scan_down, model_down, init, args.icp_distance, args.max_icp_iter)
-        final_transform = refine.transformation
-        print(
-            f"  fitness={refine.fitness:.3f}, rmse={refine.inlier_rmse:.4f}, det={np.linalg.det(final_transform[:3,:3]):.3f}"
-        )
+        if args.manual_only:
+            scan_transformed = o3d.geometry.PointCloud(scan)
+            final_transform = np.eye(4)
+            print("  Manual-only mode: skipping registration")
+        else:
+            scan_down, scan_fpfh = preprocess_point_cloud(scan, args.voxel_size)
+            init = global_registration(
+                scan_down,
+                model_down,
+                scan_fpfh,
+                model_fpfh,
+                args.global_distance,
+            )
+            refine = refine_with_icp(scan_down, model_down, init, args.icp_distance, args.max_icp_iter)
+            final_transform = refine.transformation
+            print(
+                f"  fitness={refine.fitness:.3f}, rmse={refine.inlier_rmse:.4f}, det={np.linalg.det(final_transform[:3,:3]):.3f}"
+            )
+            scan_transformed = o3d.geometry.PointCloud(scan)
+            scan_transformed.transform(final_transform)
 
-        scan_transformed = o3d.geometry.PointCloud(scan)
-        scan_transformed.transform(final_transform)
         aligned_clouds.append(scan_transformed)
         transforms[scan_path.name] = final_transform.tolist()
 

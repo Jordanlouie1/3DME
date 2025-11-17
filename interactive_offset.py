@@ -65,12 +65,16 @@ class OffsetViewer:
 
         self.app = gui.Application.instance
         self.window = self.app.create_window("Left/Right Offset Viewer", 1280, 900)
+        self.theme = getattr(gui.Application.instance, "theme", None)
+        if self.theme is None:
+            self.theme = gui.Theme()
+            gui.Application.instance.theme = self.theme
         self.scene_widget = gui.SceneWidget()
         self.scene_widget.scene = rendering.Open3DScene(self.window.renderer)
         self.scene_widget.enable_scene_caching(True)
         self.window.add_child(self.scene_widget)
 
-        self.panel = gui.Vert(0.25 * gui.theme.font_size, gui.Margins(10, 10, 10, 10))
+        self.panel = gui.Vert(0.25 * self.theme.font_size, gui.Margins(10, 10, 10, 10))
         self.window.add_child(self.panel)
 
         self.slider = gui.Slider(gui.Slider.DOUBLE)
@@ -86,7 +90,7 @@ class OffsetViewer:
         self.panel.add_child(gui.Label("Adjust spacing between clouds"))
         self.panel.add_child(self.slider)
         self.panel.add_child(self.label)
-        self.panel.add_fixed(0.5 * gui.theme.font_size)
+        self.panel.add_fixed(0.5 * self.theme.font_size)
         self.panel.add_child(self.save_button)
 
         self._setup_scene()
