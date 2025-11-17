@@ -1,0 +1,28 @@
+# Python cache and build artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Generated assets and large artifacts
+colmap_workspace/
+aligned_scans/
+aligned_to_model.ply
+aligned_transforms.json
+stitched*.ply
+
+# 3D model assets (replace with actual files you want tracked)
+3Dmodel/

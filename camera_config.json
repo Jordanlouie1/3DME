@@ -1,0 +1,22 @@
+{
+  "front": {
+    "rotation_degrees": [0, 0, 0],
+    "translation": [0, 0, 0]
+  },
+  "left": {
+    "rotation_degrees": [0, -90, 0],
+    "translation": [-1.0, 0, 0]
+  },
+  "right": {
+    "rotation_degrees": [0, 90, 0],
+    "translation": [1.0, 0, 0]
+  },
+  "back": {
+    "rotation_degrees": [0, 180, 0],
+    "translation": [0, 0, -1.0]
+  },
+  "top": {
+    "rotation_degrees": [-90, 0, 0],
+    "translation": [0, 1.0, 0]
+  }
+}

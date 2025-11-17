@@ -1,6 +1,3 @@
-# Install MoGe in editable mode so updates in ./MoGe apply immediately.
--e ./MoGe
-
 # Runtime dependencies for pose orientation + image loading.
 mediapipe==0.10.14
 opencv-python>=4.10.0.0

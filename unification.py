@@ -220,8 +220,8 @@ def interactive_rotation(left_file, right_file):
 
 # Example usage
 if __name__ == "__main__":
-    left_file = "/Users/jordan/Documents/3DME/3DME/MogeProcessed/left1.ply"
-    right_file = "/Users/jordan/Documents/3DME/3DME/MogeProcessed/right1.ply"
+    left_file = "MogeProcessed/left1.ply"
+    right_file = "MogeProcessed/right1.ply"
     
     # METHOD 1: Simple - assume right view needs 180° rotation
     print("="*60)
